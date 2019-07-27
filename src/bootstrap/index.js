@@ -10,8 +10,12 @@ const app = express();
 app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
 const port = process.env.ENV_PORT || 3000;
+
+// Importing Routes
+const authRoute = require('../routes/auth');
+// Route middleWare
+app.use('/api/user', authRoute);
 
 // eslint-disable-next-line import/no-dynamic-require, global-require
 glob.sync(path.resolve(__dirname, '../*/*-api.js')).forEach((file => require(file)(app)));
